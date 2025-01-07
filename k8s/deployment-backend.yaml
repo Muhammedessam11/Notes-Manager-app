@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notes-backend-deployment
+  labels:
+    app: notes-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: notes-backend
+  template:
+    metadata:
+      labels:
+        app: notes-backend
+    spec:
+      containers:
+        - name: notes-backend
+          image: mohamedessam1911/notes-backend:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: notes-db
+              mountPath: /app/notes.db
+              subPath: notes.db
+          env:
+            - name: PORT
+              value: "5000"
+      volumes:
+        - name: notes-db
+          persistentVolumeClaim:
+            claimName: notes-db-pvc
+
