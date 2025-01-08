@@ -6,7 +6,8 @@ COPY package.json .
 
 # Update npm to the latest version and install dependencies
 RUN npm install -g npm@latest && \
-    npm install --legacy-peer-deps
+    npm install --legacy-peer-deps && \
+    npm audit fix
 
 COPY . .
 
